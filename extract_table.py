@@ -80,9 +80,9 @@ st.title("考古报告描述信息量化")
 
 file = st.file_uploader("导入csv格式文件(excel格式可另存为):")
 name_col = st.number_input("名称(编号)列号",value=1)
-name_col=name_col-1
+name_col=name_col+1
 description_col = st.number_input("描述列的列号",value=2)
-description_col=description_col-1
+description_col=description_col+1
 metric_df = pd.DataFrame(
     {
         "测量值": ['长','残长','高','残高', '通高','宽','残宽','粗','厚','孔径','口径'],
