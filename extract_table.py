@@ -166,7 +166,7 @@ with colb:
 
 
 ##############################################执行操作#
-if name_col!=0  and description_col!=0 :
+if name_col!=1  and description_col!=1 :
   data=pd.read_csv(file,encoding="gbk")
   name_lists = process_column(data,name_col)
   result_lists = process_column(data,description_col)
