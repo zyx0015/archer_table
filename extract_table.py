@@ -79,9 +79,9 @@ def generate_dataframe(names, texts, process_function,fun_value):
 st.title("考古报告描述信息量化")
 
 file = st.file_uploader("导入csv格式文件(excel格式可另存为):")
-name_col = st.number_input("名称(编号)列号")
+name_col = st.number_input("名称(编号)列号",value=0)
 name_col=name_col+1
-description_col = st.number_input("描述列的列号")
+description_col = st.number_input("描述列的列号",value=0)
 description_col=description_col+1
 metric_df = pd.DataFrame(
     {
@@ -166,7 +166,7 @@ with colb:
 
 
 ##############################################执行操作#
-if name_col is True and description_col is True:
+if name_col!=0  and description_col!=0 :
   data=pd.read_csv(file,encoding="gbk")
   name_lists = process_column(data,name_col)
   result_lists = process_column(data,description_col)
