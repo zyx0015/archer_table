@@ -79,9 +79,9 @@ def generate_dataframe(names, texts, process_function,fun_value):
 st.title("考古报告描述信息量化")
 
 file = st.file_uploader("导入csv格式文件(excel格式可另存为):")
-name_col = st.number_input("名称(编号)列号",value=1)
+name_col = st.number_input("名称(编号)列号")
 name_col=name_col+1
-description_col = st.number_input("描述列的列号",value=2)
+description_col = st.number_input("描述列的列号")
 description_col=description_col+1
 metric_df = pd.DataFrame(
     {
@@ -166,36 +166,37 @@ with colb:
 
 
 ##############################################执行操作#
-data=pd.read_csv(file,encoding="gbk")
-name_lists = process_column(data,name_col)
-result_lists = process_column(data,description_col)
-result_lists = ['无' if pd.isna(x) else x for x in result_lists]
-
-metric_result=generate_dataframe(name_lists,result_lists,extract_metric,metric_values)
-nonmetric_result=generate_dataframe(name_lists,result_lists,extract_nonmetric,nonmetric_values)
-# 使用 st.beta_columns() 创建两列
-col1, col2 = st.columns(2)
-
-# 在第一列显示第一个表格
-with col1:
-    st.subheader("连续变量表格")
-    st.table(metric_result)
-    st.download_button(
-          label='Download metric_result.csv',
-          data=metric_result.to_csv(index=False),
-          file_name='metric_result.csv',
-          mime='text/csv'
-      )
-
-# 在第二列显示第二个表格
-with col2:
-    st.subheader("离散变量表格")
-    st.table(nonmetric_result)
-    st.download_button(
-          label='Download nonmetric_result.csv',
-          data=nonmetric_result.to_csv(index=False),
-          file_name='nonmetric_result.csv',
-          mime='text/csv'
-      )
-    
+if name_col is True and description_col is True:
+  data=pd.read_csv(file,encoding="gbk")
+  name_lists = process_column(data,name_col)
+  result_lists = process_column(data,description_col)
+  result_lists = ['无' if pd.isna(x) else x for x in result_lists]
+  
+  metric_result=generate_dataframe(name_lists,result_lists,extract_metric,metric_values)
+  nonmetric_result=generate_dataframe(name_lists,result_lists,extract_nonmetric,nonmetric_values)
+  # 使用 st.beta_columns() 创建两列
+  col1, col2 = st.columns(2)
+  
+  # 在第一列显示第一个表格
+  with col1:
+      st.subheader("连续变量表格")
+      st.table(metric_result)
+      st.download_button(
+            label='Download metric_result.csv',
+            data=metric_result.to_csv(index=False),
+            file_name='metric_result.csv',
+            mime='text/csv'
+        )
+  
+  # 在第二列显示第二个表格
+  with col2:
+      st.subheader("离散变量表格")
+      st.table(nonmetric_result)
+      st.download_button(
+            label='Download nonmetric_result.csv',
+            data=nonmetric_result.to_csv(index=False),
+            file_name='nonmetric_result.csv',
+            mime='text/csv'
+        )
+      
 
